@@ -162,6 +162,8 @@ def caseDirection4(img, currentPoint, stage):
 def traceContour(img, initialCurrentPoint, initialPreviousPoint, NBD):
     initalDirection = getCurrentDirection(initialCurrentPoint, initialPreviousPoint)
     contour = []
+    contour.append(initialCurrentPoint)
+
     if(initalDirection == 1):
         currentPoint, direction, stage = caseDirection1(img, initialCurrentPoint, 1)
     elif(initalDirection == 2):
@@ -253,28 +255,45 @@ def findContours(img):
     return contours
 
 
-# i = [[0,0,0,0,0,0,0],
-#        [0,0,0,1,0,0,0],
-#        [0,0,1,0,1,0,0],
-#        [0,1,1,1,1,1,0],
-#        [0,0,0,0,0,0,0]]
-#
+i = [[0,0,0,0,0,0,0,0,0,0],
+     [0,0,0,0,0,0,0,1,1,0],
+     [0,0,0,0,0,0,0,1,1,0],
+     [0,0,0,1,1,1,1,0,0,0],
+     [0,0,1,0,0,0,1,0,0,0],
+     [0,1,1,0,0,0,1,0,0,0],
+     [0,0,1,0,0,0,1,0,0,0],
+     [0,0,0,1,1,1,1,0,0,0],
+     [0,0,0,0,0,0,0,1,1,0],
+     [0,0,0,0,0,0,0,1,1,0],
+     [0,0,0,0,0,0,0,0,0,0]]
+
 # contours = findContours(i)
 # for line in i:
 #     print (line)
 f = open("sample.txt", "w")
 
-img = cv2.imread("sample.png")
-i = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-for x in range(0, len(i)):
-    for y in range(0, len(i[x])):
-        if (i[x][y] != 0):
-            i[x][y] = 1
+# img = cv2.imread("hand2.png")
+# i = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# for x in range(0, len(i)):
+#     for y in range(0, len(i[x])):
+#         if (i[x][y] != 0):
+#             i[x][y] = 0
+#         else:
+#             i[x][y] = 1
+#
+# print("done convert")
 
-print("done convert")
+
 
 contours = findContours(i)
-print(len(contours))
+print(contours)
+#
+# for i in contours:
+#     for x in i:
+#         img = cv2.circle(img, x, radius=1, color=(0, 0, 255), thickness=-1)
+#
+# cv2.imshow("La", img)
+# cv2.waitKey()
 
 s = [[str(e) for e in row] for row in i]
 lens = [max(map(len, col)) for col in zip(*s)]
